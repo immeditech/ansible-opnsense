@@ -6,6 +6,8 @@ from ansible_collections.oxlorg.opnsense.plugins.module_utils.base.api import \
     Session
 from ansible_collections.oxlorg.opnsense.plugins.module_utils.helper.alias import \
     validate_values, filter_builtin_alias, build_updatefreq
+from ansible_collections.oxlorg.opnsense.plugins.module_utils.helper.category import \
+    resolve_categories
 from ansible_collections.oxlorg.opnsense.plugins.module_utils.helper.main import \
     get_simple_existing, simplify_translate, is_unset
 from ansible_collections.oxlorg.opnsense.plugins.module_utils.base.cls import BaseModule
@@ -23,7 +25,7 @@ class Alias(BaseModule):
     API_KEY_PATH = 'alias.aliases.alias'
     API_MOD = 'firewall'
     API_CONT = 'alias'
-    FIELDS_CHANGE = ['content', 'description']
+    FIELDS_CHANGE = ['content', 'description', 'categories']
     FIELDS_ALL = ['name', 'type', 'enabled']
     FIELDS_ALL.extend(FIELDS_CHANGE)
     FIELDS_ALL.extend(['updatefreq_days', 'interface', 'path_expression'])
@@ -33,6 +35,12 @@ class Alias(BaseModule):
     FIELDS_TYPING = {
         'bool': ['enabled'],
         'select': ['type', 'interface'],
+        # `categories` arrives from firewall.alias.get as a dict-of-dicts with
+        # per-entry {'selected': 0|1}; type 'list' funnels it through
+        # get_selected_list(get_value=False) → returns the list of selected
+        # category UUIDs, which is what we compare against (user input is
+        # resolved to UUIDs before this comparison via resolve_categories()).
+        'list': ['categories'],
     }
     EXIST_ATTR = 'alias'
     JOIN_CHAR = '\n'
@@ -66,6 +74,9 @@ class Alias(BaseModule):
                 f"Alias name '{self.p['name']}' is invalid - "
                 f"must be shorter than {self.MAX_ALIAS_LEN} characters",
             )
+
+        if self.p['state'] == 'present' and not is_unset(self.p.get('categories', [])):
+            resolve_categories(self, self.p)
 
         self.b.find(match_fields=[self.FIELD_ID])
 
@@ -135,3 +146,20 @@ class Alias(BaseModule):
                 simplify_func=self.simplify_existing,
             )
         )
+
+    def _build_request(self) -> dict:
+        # JOIN_CHAR for the alias module is '\n' (used to glue together
+        # content entries on the wire). OPNsense expects categories as a
+        # comma-separated list of UUIDs in the same payload — so we
+        # materialise that string here, then let the generic build_request
+        # pass it through unchanged (string, not list → no further join).
+        saved = self.p.get('categories')
+        if isinstance(saved, list):
+            self.p['categories'] = ','.join(saved) if saved else ''
+        try:
+            return self.b.build_request()
+        finally:
+            # Restore the list so subsequent diff/log code does not see the
+            # string (it would render badly in --diff output).
+            if isinstance(saved, list):
+                self.p['categories'] = saved
