@@ -32,5 +32,12 @@ ALIAS_MOD_ARGS = dict(
     ]),
     url_username=dict(type='str', required=False, default='', aliases=['username']),
     url_password=dict(type='str', required=False, default='', aliases=['password'], no_log=True),
+    categories=dict(
+        type='list', required=False, default=[], elements='str', aliases=['cat'],
+        description='Categories the alias should be assigned to. Provide category '
+                    'names (preferred — resolved to UUIDs at runtime) or pre-resolved '
+                    'UUIDs. Use module immeditech.opnsense.category to manage the '
+                    'categories themselves.',
+    ),
     **STATE_MOD_ARG,
 )
