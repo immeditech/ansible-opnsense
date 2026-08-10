@@ -46,6 +46,7 @@ RULE_DEFAULTS = {
     'description': '',
     'debug': False,
     'icmp_type': [],
+    'categories': [],
     'icmpv6_type': [],
     'divert_to': '',
     'shaper1': '',
@@ -78,6 +79,7 @@ RULE_MOD_ARG_ALIASES = {
     'enabled': ['en'],
     'icmp_type': ['icmp_types'],
     'icmpv6_type': ['icmpv6_types', 'ip6_icmp_types'],
+    'categories': ['cat'],
 }
 
 RULE_MATCH_FIELDS_ARG = dict(
@@ -269,6 +271,14 @@ RULE_MOD_ARGS = dict(
     divert_to=dict(type='str', required=False, description='Target to divert the traffic to'),
     shaper1=dict(type='str', required=False, description='Traffic Shaper to apply'),
     shaper2=dict(type='str', required=False, description='Traffic Shaper to apply'),
+    categories=dict(
+        type='list', required=False, default=RULE_DEFAULTS['categories'], elements='str',
+        aliases=RULE_MOD_ARG_ALIASES['categories'],
+        description='Categories the rule should be assigned to. Provide category '
+                    'names (preferred — resolved to UUIDs at runtime) or pre-resolved '
+                    'UUIDs. Use module immeditech.opnsense.category to manage the '
+                    'categories themselves.',
+    ),
     **STATE_MOD_ARG,
     **RULE_MATCH_FIELDS_ARG,
 )

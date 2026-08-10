@@ -6,6 +6,8 @@ from ansible_collections.oxlorg.opnsense.plugins.module_utils.helper.validate im
     is_unset
 from ansible_collections.oxlorg.opnsense.plugins.module_utils.helper.rule import \
     validate_values
+from ansible_collections.oxlorg.opnsense.plugins.module_utils.helper.category import \
+    resolve_categories
 from ansible_collections.oxlorg.opnsense.plugins.module_utils.base.module import BaseModule
 
 
@@ -24,6 +26,7 @@ class SNat(BaseModule):
         'sequence', 'no_nat', 'interface', 'target', 'target_port', 'description',
         'ip_protocol', 'protocol', 'source_invert', 'source_net', 'source_port',
         'destination_invert', 'destination_net', 'destination_port', 'log', 'static_port',
+        'categories',
     ]
     FIELDS_ALL = ['enabled']
     FIELDS_ALL.extend(FIELDS_CHANGE)
@@ -36,7 +39,7 @@ class SNat(BaseModule):
     }
     FIELDS_TYPING = {
         'bool': ['enabled', 'log', 'source_invert', 'no_nat', 'destination_invert', 'static_port'],
-        'list': [],
+        'list': ['categories'],
         'select': ['interface', 'ip_protocol', 'protocol'],
         'int': [],
     }
@@ -63,6 +66,10 @@ class SNat(BaseModule):
                 )
 
         self._build_log_name()
+
+        if self.p['state'] == 'present' and not is_unset(self.p.get('categories', [])):
+            resolve_categories(self, self.p)
+
         self.find(match_fields=self.p['match_fields'])
 
         if self.p['state'] == 'present':

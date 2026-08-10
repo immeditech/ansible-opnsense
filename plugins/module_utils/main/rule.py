@@ -7,6 +7,10 @@ from ansible_collections.oxlorg.opnsense.plugins.module_utils.helper.validate im
 from ansible_collections.oxlorg.opnsense.plugins.module_utils.base.api import Session
 from ansible_collections.oxlorg.opnsense.plugins.module_utils.helper.rule import \
     validate_values
+from ansible_collections.oxlorg.opnsense.plugins.module_utils.helper.category import \
+    resolve_categories
+from ansible_collections.oxlorg.opnsense.plugins.module_utils.helper.main import \
+    is_unset
 from ansible_collections.oxlorg.opnsense.plugins.module_utils.base.module import BaseModule
 
 
@@ -31,7 +35,7 @@ class Rule(BaseModule):
         'max_states', 'max_src_nodes', 'max_src_states', 'max_src_conn', 'max_src_conn_rate',
         'max_src_conn_rates', 'overload', 'adaptive_start', 'adaptive_end', 'prio', 'set_prio', 'set_prio_low',
         'tcp_flags', 'tcp_flags_clear', 'schedule', 'tos', 'icmp_type',
-        'divert_to', 'shaper1', 'shaper2',
+        'divert_to', 'shaper1', 'shaper2', 'categories',
     ]
     FIELDS_ALL = ['enabled']
     FIELDS_ALL.extend(FIELDS_CHANGE)
@@ -72,7 +76,11 @@ class Rule(BaseModule):
             'overload', 'prio', 'set_prio', 'set_prio_low', 'schedule', 'tos',
             'divert_to', 'shaper1', 'shaper2',
         ],
-        'list': ['interface', 'tcp_flags', 'tcp_flags_clear', 'icmp_type', 'icmpv6_type'],
+        # `categories` arrives from firewall.filter.get as a dict-of-dicts with
+        # per-entry {'selected': 0|1}; type 'list' funnels it through
+        # get_selected_list(get_value=False) → list of selected category UUIDs
+        # (user input is resolved to UUIDs beforehand via resolve_categories()).
+        'list': ['interface', 'tcp_flags', 'tcp_flags_clear', 'icmp_type', 'icmpv6_type', 'categories'],
         'int': ['sequence', 'state_timeout'],
     }
     FIELDS_OPTIONAL = ['icmp_type', 'icmpv6_type']
@@ -121,6 +129,10 @@ class Rule(BaseModule):
             )
 
         self._build_log_name()
+
+        if self.p['state'] == 'present' and not is_unset(self.p.get('categories', [])):
+            resolve_categories(self, self.p)
+
         self.find(match_fields=self.p['match_fields'])
 
         if self.p['state'] == 'present':

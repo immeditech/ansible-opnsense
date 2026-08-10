@@ -17,14 +17,20 @@ def resolve_categories(module: AnsibleModule, params: dict) -> None:
     Idempotent across multiple calls per run thanks to caching on the
     module instance (`existing_categories`).
     """
-    if not hasattr(module, 'existing_categories'):
+    # Cache on the shared AnsibleModule (module.m) when called with a
+    # BaseModule entry-instance: multi-modules (rule_multi, alias_multi)
+    # create one entry-instance per item, so an instance-level cache would
+    # re-fetch the category set for every single entry.
+    cache_holder = getattr(module, 'm', module)
+
+    if not hasattr(cache_holder, 'existing_categories'):
         categories = module.s.get(cnf={
             'module': 'firewall',
             'controller': 'category',
             'command': 'get',
         })
 
-        module.existing_categories = {
+        cache_holder.existing_categories = {
             category['name']: uuid
             for uuid, category in
             categories['category']['categories']['category'].items()
@@ -34,6 +40,6 @@ def resolve_categories(module: AnsibleModule, params: dict) -> None:
         params['categories'] = [params['categories']]
 
     params['categories'] = [
-        module.existing_categories.get(name, name)
+        cache_holder.existing_categories.get(name, name)
         for name in params['categories']
     ]
