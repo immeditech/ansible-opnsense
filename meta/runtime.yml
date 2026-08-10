@@ -110,6 +110,7 @@ action_groups:
     - oxlorg.opnsense.gateway
   nat:
     - oxlorg.opnsense.nat_source
+    - oxlorg.opnsense.nat_source_multi
     - oxlorg.opnsense.nat_one_to_one
   system:
     - oxlorg.opnsense.list

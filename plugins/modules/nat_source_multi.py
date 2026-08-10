@@ -8,15 +8,19 @@
 
 from ansible.module_utils.basic import AnsibleModule
 
+
 from ansible_collections.oxlorg.opnsense.plugins.module_utils.base.handler import \
     module_dependency_error, MODULE_EXCEPTIONS
 
 try:
-    from ansible_collections.oxlorg.opnsense.plugins.module_utils.base.wrapper import module_wrapper
-    from ansible_collections.oxlorg.opnsense.plugins.module_utils.defaults.source_nat import \
-        SNAT_MOD_ARGS, SNAT_MATCH_FIELDS_ARG
+    from ansible_collections.oxlorg.opnsense.plugins.module_utils.base.wrapper import \
+        module_multi_wrapper
+    from ansible_collections.oxlorg.opnsense.plugins.module_utils.base.multi import \
+        build_multi_mod_args
     from ansible_collections.oxlorg.opnsense.plugins.module_utils.defaults.main import \
         OPN_MOD_ARGS, RELOAD_MOD_ARG
+    from ansible_collections.oxlorg.opnsense.plugins.module_utils.defaults.source_nat import \
+        SNAT_MOD_ARGS, SNAT_MATCH_FIELDS_ARG
     from ansible_collections.oxlorg.opnsense.plugins.module_utils.main.nat_source import SNat
 
 except MODULE_EXCEPTIONS:
@@ -28,10 +32,24 @@ except MODULE_EXCEPTIONS:
 
 
 def run_module():
+    entry_multi_args = build_multi_mod_args(
+        mod_args=SNAT_MOD_ARGS,
+        aliases=['rules'],
+    )
+
     module_args = dict(
-        **SNAT_MOD_ARGS,
-        **RELOAD_MOD_ARG,
+        **entry_multi_args,
         **OPN_MOD_ARGS,
+        **RELOAD_MOD_ARG,
+        **SNAT_MATCH_FIELDS_ARG,
+    )
+
+    module = AnsibleModule(
+        argument_spec=module_args,
+        supports_check_mode=True,
+        required_one_of=[
+            ('multi', 'multi_purge', 'multi_control.purge_all'),
+        ],
     )
 
     result = dict(
@@ -39,15 +57,16 @@ def run_module():
         diff={
             'before': {},
             'after': {},
-        }
+        },
     )
 
-    module = AnsibleModule(
-        argument_spec=module_args,
-        supports_check_mode=True,
+    module_multi_wrapper(
+        module=module,
+        result=result,
+        obj=SNat,
+        kind='rule',
+        entry_args=entry_multi_args,
     )
-
-    module_wrapper(SNat(module=module, result=result))
     module.exit_json(**result)
 
 
