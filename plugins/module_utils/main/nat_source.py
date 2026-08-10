@@ -22,6 +22,12 @@ class SNat(BaseModule):
     API_KEY_PATH = 'filter.snatrules.rule'
     API_MOD = 'firewall'
     API_CONT = 'source_nat'
+    # OPNsense 26.7 no longer returns the snat rules from
+    # 'firewall/source_nat/get' (only the 'general' snat_mode section) —
+    # fetch them from the full 'firewall/filter/get' tree instead, which
+    # still carries 'filter.snatrules.rule'. Write commands (add_rule etc.)
+    # stay on the 'source_nat' controller.
+    API_CONT_GET = 'filter'
     FIELDS_CHANGE = [
         'sequence', 'no_nat', 'interface', 'target', 'target_port', 'description',
         'ip_protocol', 'protocol', 'source_invert', 'source_net', 'source_port',
