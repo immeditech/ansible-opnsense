@@ -265,6 +265,11 @@ RULE_MOD_ARGS = dict(
             'unreach', 'toobig', 'timex', 'paramprob', 'echoreq', 'echorep', 'listqry', 'listenrep',
             'listendone', 'routersol', 'reouteradv', 'neighbrsol', 'neighbradv', 'redir', 'routrrenum',
             'niqry', 'nirep', 'mtraceresp', 'mtrace',
+            # OPNsense >= 26.7 stores ICMPv6 types as numeric codes - both
+            # the symbolic names above (mapped at runtime) and the raw codes
+            # are accepted:
+            '1', '2', '3', '4', '128', '129', '130', '131', '132', '133', '134',
+            '135', '136', '137', '138', '139', '140', '200', '201',
         ],
         description='If protocol is ICMPv6 you can specify the types'
     ),

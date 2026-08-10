@@ -34,7 +34,7 @@ class Rule(BaseModule):
         'allow_opts', 'state_type', 'state_policy', 'state_timeout',
         'max_states', 'max_src_nodes', 'max_src_states', 'max_src_conn', 'max_src_conn_rate',
         'max_src_conn_rates', 'overload', 'adaptive_start', 'adaptive_end', 'prio', 'set_prio', 'set_prio_low',
-        'tcp_flags', 'tcp_flags_clear', 'schedule', 'tos', 'icmp_type',
+        'tcp_flags', 'tcp_flags_clear', 'schedule', 'tos', 'icmp_type', 'icmpv6_type',
         'divert_to', 'shaper1', 'shaper2', 'categories',
     ]
     FIELDS_ALL = ['enabled']
@@ -84,6 +84,17 @@ class Rule(BaseModule):
         'int': ['sequence', 'state_timeout'],
     }
     FIELDS_OPTIONAL = ['icmp_type', 'icmpv6_type']
+    # OPNsense >= 26.7 keys the icmp6type select by numeric ICMPv6 type code;
+    # map the module's symbolic names accordingly (list field, so the generic
+    # whole-value FIELDS_VALUE_MAPPING cannot be used).
+    ICMP6_TYPE_MAP = {
+        'unreach': '1', 'toobig': '2', 'timex': '3', 'paramprob': '4',
+        'echoreq': '128', 'echorep': '129', 'listqry': '130', 'listenrep': '131',
+        'listendone': '132', 'routersol': '133', 'reouteradv': '134',
+        'neighbrsol': '135', 'neighbradv': '136', 'redir': '137',
+        'routrrenum': '138', 'niqry': '139', 'nirep': '140',
+        'mtraceresp': '200', 'mtrace': '201',
+    }
     EXIST_ATTR = 'rule'
     TIMEOUT = 60.0  # urltable etc reload
     INT_VALIDATIONS = {
@@ -129,6 +140,11 @@ class Rule(BaseModule):
             )
 
         self._build_log_name()
+
+        if not is_unset(self.p.get('icmpv6_type', [])):
+            self.p['icmpv6_type'] = [
+                self.ICMP6_TYPE_MAP.get(t, t) for t in self.p['icmpv6_type']
+            ]
 
         if self.p['state'] == 'present' and not is_unset(self.p.get('categories', [])):
             resolve_categories(self, self.p)
