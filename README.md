@@ -26,7 +26,7 @@ Then - install the collection itself:
 ansible-galaxy collection install git+https://github.com/O-X-L/ansible-opnsense.git
 
 # stable/tested version:
-ansible-galaxy collection install git+https://github.com/O-X-L/ansible-opnsense.git,25.7.8
+ansible-galaxy collection install git+https://github.com/O-X-L/ansible-opnsense.git,26.1.11
 ## OR
 ansible-galaxy collection install oxlorg.opnsense
 ```
@@ -48,7 +48,7 @@ If you DO NOT want to use Ansible - [this fork](https://github.com/O-X-L/opnsens
 Support the Open-Source projects that make these modules possible:
 
 * [Donate to OPNsense](https://opnsense.org/donate/) or [Buy the Business-Edition](https://shop.opnsense.com/product-categorie/software_and_licenses/)
-* [Donate to the Ansible-Module Maintainers](https://shop.oxl.app/products/open-source-spende) or [Buy a Support-License](https://shop.oxl.app/products/open-source-support-opnsense-ansible-collection)
+* [Contact the ansible-collection maintainer for support](mailto://contact+opnsense@oxl.at)
 
 ----
 
@@ -68,7 +68,9 @@ We try that the `oxlorg.opnsense` modules always support the latest version of O
 
 If an API changed, the current module-implementation might fail for firewalls running an older firmware.
 
-As [this project is unfunded](https://github.com/O-X-L/ansible-opnsense/discussions/199) we do not actively check for API-changes - if you find missing functionalities you need/want to have please [report it](https://github.com/O-X-L/ansible-opnsense/issues)!
+I currently try to create a stable release once or twice a year - as this takes 10-20h of work each time for implementing API-fixes.
+
+As [this project is unfunded](https://github.com/O-X-L/ansible-opnsense/discussions/199) we do not actively check for API-changes - if you find missing functionalities you need/want to have please [report it](https://github.com/O-X-L/ansible-opnsense/issues)! Not all features will be implemented!
 
 ----
 
@@ -94,20 +96,20 @@ not implemented => development => [testing](https://github.com/O-X-L/ansible-opn
 | **Rules**                 | oxlorg.opnsense.rule                                           | [Docs](https://ansible-opnsense.oxl.app/modules/rule.html)                                                      | stable   |
 | **Rules**                 | oxlorg.opnsense.rule_multi                                     | [Docs](https://ansible-opnsense.oxl.app/modules/rule_multi.html)                                                | stable   |
 | **Rules**                 | oxlorg.opnsense.rule_purge                                     | [Docs](https://ansible-opnsense.oxl.app/modules/rule_multi.html#oxlorg-opnsense-rule-purge)                     | unstable |
-| **Rule Interface Groups** | oxlorg.opnsense.rule_interface_group                           | [Docs](https://ansible-opnsense.oxl.app/modules/rule_interface_group.html#oxlorg-opnsense-rule-interface-group) | stable |
+| **Rule Interface Groups** | oxlorg.opnsense.rule_interface_group                           | [Docs](https://ansible-opnsense.oxl.app/modules/rule_interface_group.html#oxlorg-opnsense-rule-interface-group) | stable   |
 | **Savepoints**            | oxlorg.opnsense.savepoint                                      | [Docs](https://ansible-opnsense.oxl.app/modules/savepoint.html)                                                 | stable   |
 | **Packages**              | oxlorg.opnsense.package                                        | [Docs](https://ansible-opnsense.oxl.app/modules/package.html)                                                   | stable   |
 | **System**                | oxlorg.opnsense.system                                         | [Docs](https://ansible-opnsense.oxl.app/modules/system.html)                                                    | stable   |
 | **Cron-Jobs**             | oxlorg.opnsense.cron                                           | [Docs](https://ansible-opnsense.oxl.app/modules/cron.html)                                                      | stable   |
 | **Routes**                | oxlorg.opnsense.route                                          | [Docs](https://ansible-opnsense.oxl.app/modules/routing.html)                                                   | stable   |
-| **Gateways**              | oxlorg.opnsense.gateway                                        | [Docs](https://ansible-opnsense.oxl.app/modules/routing.html)                                                   | stable |
+| **Gateways**              | oxlorg.opnsense.gateway                                        | [Docs](https://ansible-opnsense.oxl.app/modules/routing.html)                                                   | stable   |
 | **DNS**                   | oxlorg.opnsense.unbound_general                                | [Docs](https://ansible-opnsense.oxl.app/modules/unbound_general.html)                                           | stable   |
 | **DNS**                   | oxlorg.opnsense.unbound_acl                                    | [Docs](https://ansible-opnsense.oxl.app/modules/unbound_acl.html)                                               | stable   |
 | **DNS**                   | oxlorg.opnsense.unbound_forward                                | [Docs](https://ansible-opnsense.oxl.app/modules/unbound_forwarding.html)                                        | stable   |
 | **DNS**                   | oxlorg.opnsense.unbound_dot                                    | [Docs](https://ansible-opnsense.oxl.app/modules/unbound_dot.html)                                               | stable   |
 | **DNS**                   | oxlorg.opnsense.unbound_host                                   | [Docs](https://ansible-opnsense.oxl.app/modules/unbound_host.html)                                              | stable   |
 | **DNS**                   | oxlorg.opnsense.unbound_host_alias                             | [Docs](https://ansible-opnsense.oxl.app/modules/unbound_host_alias.html)                                        | stable   |
-| **DNS**                   | oxlorg.opnsense.unbound_dnsbl                                  | [Docs](https://ansible-opnsense.oxl.app/modules/unbound_host_alias.html)                                        | stable |
+| **DNS**                   | oxlorg.opnsense.unbound_dnsbl                                  | [Docs](https://ansible-opnsense.oxl.app/modules/unbound_host_alias.html)                                        | stable   |
 | **Syslog**                | oxlorg.opnsense.syslog                                         | [Docs](https://ansible-opnsense.oxl.app/modules/syslog.html)                                                    | stable   |
 | **IPSec**                 | oxlorg.opnsense.ipsec_connection, oxlorg.opnsense.ipsec_tunnel | [Docs](https://ansible-opnsense.oxl.app/modules/ipsec.html)                                                     | stable   |
 | **IPSec**                 | oxlorg.opnsense.ipsec_pool, oxlorg.opnsense.ipsec_network      | [Docs](https://ansible-opnsense.oxl.app/modules/ipsec.html)                                                     | stable   |
@@ -132,13 +134,14 @@ not implemented => development => [testing](https://github.com/O-X-L/ansible-opn
 | **Interfaces**            | oxlorg.opnsense.interface_vlan                                 | [Docs](https://ansible-opnsense.oxl.app/modules/interface.html)                                                 | stable   |
 | **Interfaces**            | oxlorg.opnsense.interface_vxlan                                | [Docs](https://ansible-opnsense.oxl.app/modules/interface.html)                                                 | stable   |
 | **Interfaces**            | oxlorg.opnsense.interface_vip                                  | [Docs](https://ansible-opnsense.oxl.app/modules/interface.html)                                                 | stable   |
-| **Interfaces**            | oxlorg.opnsense.interface_lagg                                 | [Docs](https://ansible-opnsense.oxl.app/modules/interface.html)                                                 | stable |
-| **Interfaces**            | oxlorg.opnsense.interface_loopback                             | [Docs](https://ansible-opnsense.oxl.app/modules/interface.html)                                                 | stable |
+| **Interfaces**            | oxlorg.opnsense.interface_lagg                                 | [Docs](https://ansible-opnsense.oxl.app/modules/interface.html)                                                 | stable   |
+| **Interfaces**            | oxlorg.opnsense.interface_loopback                             | [Docs](https://ansible-opnsense.oxl.app/modules/interface.html)                                                 | stable   |
 | **Interfaces**            | oxlorg.opnsense.interface_gre                                  | [Docs](https://ansible-opnsense.oxl.app/modules/interface.html)                                                 | stable   |
 | **Interfaces**            | oxlorg.opnsense.interface_bridge                               | [Docs](https://ansible-opnsense.oxl.app/modules/interface.html)                                                 | unstable |
 | **Interfaces**            | oxlorg.opnsense.interface_gif                                  | [Docs](https://ansible-opnsense.oxl.app/modules/interface.html)                                                 | unstable |
-| **NAT**                   | oxlorg.opnsense.nat_source                                     | [Docs](https://ansible-opnsense.oxl.app/modules/source_nat.html)                                                | stable   |
-| **NAT**                   | oxlorg.opnsense.nat_one_to_one                                 | [Docs](https://ansible-opnsense.oxl.app/modules/one_to_one.html)                                                | stable |
+| **NAT**                   | oxlorg.opnsense.nat_source                                     | [Docs](https://ansible-opnsense.oxl.app/modules/nat_source.html)                                                | stable   |
+| **NAT**                   | oxlorg.opnsense.nat_destination                                | [Docs](https://ansible-opnsense.oxl.app/modules/nat_destination.html)                                           | unstable |
+| **NAT**                   | oxlorg.opnsense.nat_one_to_one                                 | [Docs](https://ansible-opnsense.oxl.app/modules/nat_one_to_one.html)                                            | stable   |
 | **Dynamic Routing**       | oxlorg.opnsense.frr_diagnostic                                 | [Docs](https://ansible-opnsense.oxl.app/modules/frr_diagnostic.html)                                            | stable   |
 | **Dynamic Routing**       | oxlorg.opnsense.frr_general                                    | [Docs](https://ansible-opnsense.oxl.app/modules/frr_general.html)                                               | stable   |
 | **Dynamic Routing**       | oxlorg.opnsense.frr_bfd_general                                | [Docs](https://ansible-opnsense.oxl.app/modules/frr_bfd.html#oxlorg-opnsense-frr-bfd-general)                   | stable   |
@@ -149,20 +152,20 @@ not implemented => development => [testing](https://github.com/O-X-L/ansible-opn
 | **Dynamic Routing**       | oxlorg.opnsense.frr_bgp_route_map                              | [Docs](https://ansible-opnsense.oxl.app/modules/frr_bgp.html#oxlorg-opnsense-frr-bgp-route-map)                 | stable   |
 | **Dynamic Routing**       | oxlorg.opnsense.frr_bgp_community_list                         | [Docs](https://ansible-opnsense.oxl.app/modules/frr_bgp.html#oxlorg-opnsense-frr-bgp-community-list)            | stable   |
 | **Dynamic Routing**       | oxlorg.opnsense.frr_bgp_as_path                                | [Docs](https://ansible-opnsense.oxl.app/modules/frr_bgp.html#oxlorg-opnsense-frr-bgp-as-path)                   | stable   |
-| **Dynamic Routing**       | oxlorg.opnsense.frr_bgp_redistribution                         | [Docs](https://ansible-opnsense.oxl.app/modules/frr_bgp.html#oxlorg-opnsense-frr-bgp-redistribution)            | stable |
-| **Dynamic Routing**       | oxlorg.opnsense.frr_bgp_peer_group                             | [Docs](https://ansible-opnsense.oxl.app/modules/frr_bgp.html#oxlorg-opnsense-frr-bgp-peer-group)                | stable |
+| **Dynamic Routing**       | oxlorg.opnsense.frr_bgp_redistribution                         | [Docs](https://ansible-opnsense.oxl.app/modules/frr_bgp.html#oxlorg-opnsense-frr-bgp-redistribution)            | stable   |
+| **Dynamic Routing**       | oxlorg.opnsense.frr_bgp_peer_group                             | [Docs](https://ansible-opnsense.oxl.app/modules/frr_bgp.html#oxlorg-opnsense-frr-bgp-peer-group)                | stable   |
 | **Dynamic Routing**       | oxlorg.opnsense.frr_ospf_general                               | [Docs](https://ansible-opnsense.oxl.app/modules/frr_ospf.html#oxlorg-opnsense-frr-ospf-general)                 | stable   |
 | **Dynamic Routing**       | oxlorg.opnsense.frr_ospf_prefix_list                           | [Docs](https://ansible-opnsense.oxl.app/modules/frr_ospf.html#oxlorg-opnsense-frr-ospf-prefix-list)             | stable   |
 | **Dynamic Routing**       | oxlorg.opnsense.frr_ospf_route_map                             | [Docs](https://ansible-opnsense.oxl.app/modules/frr_ospf.html#oxlorg-opnsense-frr-ospf-route-map)               | stable   |
 | **Dynamic Routing**       | oxlorg.opnsense.frr_ospf_interface                             | [Docs](https://ansible-opnsense.oxl.app/modules/frr_ospf.html#oxlorg-opnsense-frr-ospf-interface)               | stable   |
 | **Dynamic Routing**       | oxlorg.opnsense.frr_ospf_network                               | [Docs](https://ansible-opnsense.oxl.app/modules/frr_ospf.html#oxlorg-opnsense-frr-ospf-network)                 | stable   |
-| **Dynamic Routing**       | oxlorg.opnsense.frr_ospf_redistribution                        | [Docs](https://ansible-opnsense.oxl.app/modules/frr_ospf.html#oxlorg-opnsense-frr-ospf-redistribution)          | stable |
+| **Dynamic Routing**       | oxlorg.opnsense.frr_ospf_redistribution                        | [Docs](https://ansible-opnsense.oxl.app/modules/frr_ospf.html#oxlorg-opnsense-frr-ospf-redistribution)          | stable   |
 | **Dynamic Routing**       | oxlorg.opnsense.frr_ospf3_general                              | [Docs](https://ansible-opnsense.oxl.app/modules/frr_ospf.html#oxlorg-opnsense-frr-ospf3-general)                | stable   |
 | **Dynamic Routing**       | oxlorg.opnsense.frr_ospf3_prefix_list                          | [Docs](https://ansible-opnsense.oxl.app/modules/frr_ospf.html#oxlorg-opnsense-frr-ospf3-prefix-list)            | stable   |
 | **Dynamic Routing**       | oxlorg.opnsense.frr_ospf3_route_map                            | [Docs](https://ansible-opnsense.oxl.app/modules/frr_ospf.html#oxlorg-opnsense-frr-ospf3-route-map)              | stable   |
 | **Dynamic Routing**       | oxlorg.opnsense.frr_ospf3_interface                            | [Docs](https://ansible-opnsense.oxl.app/modules/frr_ospf.html#oxlorg-opnsense-frr-ospf3-interface)              | stable   |
 | **Dynamic Routing**       | oxlorg.opnsense.frr_ospf3_network                              | [Docs](https://ansible-opnsense.oxl.app/modules/frr_ospf.html#oxlorg-opnsense-frr-ospf3-network)                | stable   |
-| **Dynamic Routing**       | oxlorg.opnsense.frr_ospf3_redistribution                       | [Docs](https://ansible-opnsense.oxl.app/modules/frr_ospf.html#oxlorg-opnsense-frr-ospf3-redistribution)         | stable |
+| **Dynamic Routing**       | oxlorg.opnsense.frr_ospf3_redistribution                       | [Docs](https://ansible-opnsense.oxl.app/modules/frr_ospf.html#oxlorg-opnsense-frr-ospf3-redistribution)         | stable   |
 | **Dynamic Routing**       | oxlorg.opnsense.frr_rip                                        | [Docs](https://ansible-opnsense.oxl.app/modules/frr_rip.html)                                                   | stable   |
 | **DNS**                   | oxlorg.opnsense.bind_general                                   | [Docs](https://ansible-opnsense.oxl.app/modules/bind.html#oxlorg-opnsense-bind-general)                         | stable   |
 | **DNS**                   | oxlorg.opnsense.bind_blocklist                                 | [Docs](https://ansible-opnsense.oxl.app/modules/bind.html#oxlorg-opnsense-bind-blocklist)                       | stable   |
@@ -194,31 +197,31 @@ not implemented => development => [testing](https://github.com/O-X-L/ansible-opn
 | **OpenVPN**               | oxlorg.opnsense.openvpn_static_key                             | [Docs](https://ansible-opnsense.oxl.app/modules/openvpn.html)                                                   | stable   |
 | **OpenVPN**               | oxlorg.opnsense.openvpn_status                                 | [Docs](https://ansible-opnsense.oxl.app/modules/openvpn.html)                                                   | stable   |
 | **OpenVPN**               | oxlorg.opnsense.openvpn_client_override                        | [Docs](https://ansible-opnsense.oxl.app/modules/openvpn.html)                                                   | stable   |
-| **Nginx**                 | oxlorg.opnsense.nginx_general                                  | [Docs](https://ansible-opnsense.oxl.app/modules/nginx.html#oxlorg-opnsense-nginx-general)                       | stable |
-| **Nginx**                 | oxlorg.opnsense.nginx_upstream_server                          | [Docs](https://ansible-opnsense.oxl.app/modules/nginx.html#oxlorg-opnsense-nginx-upstream-server)               | stable |
-| **DHCP Relay**            | oxlorg.opnsense.dhcrelay_relay                                 | [Docs](https://ansible-opnsense.oxl.app/modules/dhcrelay_relay.html)                                            | stable |
-| **DHCP Relay**            | oxlorg.opnsense.dhcrelay_destination                           | [Docs](https://ansible-opnsense.oxl.app/modules/dhcrelay_destination.html)                                      | stable |
-| **DHCP**                  | oxlorg.opnsense.dhcp_general                                   | [Docs](https://ansible-opnsense.oxl.app/modules/dhcp.html)                                                      | stable |
-| **DHCP Subnet**           | oxlorg.opnsense.dhcp_subnet                                    | [Docs](https://ansible-opnsense.oxl.app/modules/dhcp.html)                                                      | stable |
-| **DHCP Reservation**      | oxlorg.opnsense.dhcp_reservation                               | [Docs](https://ansible-opnsense.oxl.app/modules/dhcp.html)                                                      | stable |
-| **DHCP Controlagent**     | oxlorg.opnsense.dhcp_controlagent                              | [Docs](https://ansible-opnsense.oxl.app/modules/dhcp.html)                                                      | stable |
-| **ACME (Certificates)**   | oxlorg.opnsense.acme_account                                   | [Docs](https://ansible-opnsense.oxl.app/modules/acmeclient.html)                                                | stable |
-| **ACME (Certificates)**   | oxlorg.opnsense.acme_action                                    | [Docs](https://ansible-opnsense.oxl.app/modules/acmeclient.html)                                                | stable |
-| **ACME (Certificates)**   | oxlorg.opnsense.acme_general                                   | [Docs](https://ansible-opnsense.oxl.app/modules/acmeclient.html)                                                | stable |
-| **ACME (Certificates)**   | oxlorg.opnsense.acme_validation                                | [Docs](https://ansible-opnsense.oxl.app/modules/acmeclient.html)                                                | stable |
-| **ACME (Certificates)**   | oxlorg.opnsense.acme_certificate                               | [Docs](https://ansible-opnsense.oxl.app/modules/acmeclient.html)                                                | stable |
-| **Postfix**               | oxlorg.opnsense.postfix_general                                | [Docs](https://ansible-opnsense.oxl.app/modules/postfix.html)                                                   | stable |
-| **Postfix**               | oxlorg.opnsense.postfix_domain                                 | [Docs](https://ansible-opnsense.oxl.app/modules/postfix.html)                                                   | stable |
-| **Postfix**               | oxlorg.opnsense.postfix_recipient                              | [Docs](https://ansible-opnsense.oxl.app/modules/postfix.html)                                                   | stable |
-| **Postfix**               | oxlorg.opnsense.postfix_recipientbcc                           | [Docs](https://ansible-opnsense.oxl.app/modules/postfix.html)                                                   | stable |
-| **Postfix**               | oxlorg.opnsense.postfix_sender                                 | [Docs](https://ansible-opnsense.oxl.app/modules/postfix.html)                                                   | stable |
-| **Postfix**               | oxlorg.opnsense.postfix_senderbcc                              | [Docs](https://ansible-opnsense.oxl.app/modules/postfix.html)                                                   | stable |
-| **Postfix**               | oxlorg.opnsense.postfix_sendercanonical                        | [Docs](https://ansible-opnsense.oxl.app/modules/postfix.html)                                                   | stable |
-| **Postfix**               | oxlorg.opnsense.postfix_headercheck                            | [Docs](https://ansible-opnsense.oxl.app/modules/postfix.html)                                                   | stable |
-| **Postfix**               | oxlorg.opnsense.postfix_address                                | [Docs](https://ansible-opnsense.oxl.app/modules/postfix.html)                                                   | stable |
-| **Snapshot**              | oxlorg.opnsense.snapshot                                       | [Docs](https://ansible-opnsense.oxl.app/modules/snapshot.html)                                                  | stable |
-| **High Availability**     | oxlorg.opnsense.hasync_general                                 | [Docs](https://ansible-opnsense.oxl.app/modules/hasync.html)                                                    | stable |
-| **High Availability**     | oxlorg.opnsense.hasync_service                                 | [Docs](https://ansible-opnsense.oxl.app/modules/hasync.html)                                                    | stable |
+| **Nginx**                 | oxlorg.opnsense.nginx_general                                  | [Docs](https://ansible-opnsense.oxl.app/modules/nginx.html#oxlorg-opnsense-nginx-general)                       | stable   |
+| **Nginx**                 | oxlorg.opnsense.nginx_upstream_server                          | [Docs](https://ansible-opnsense.oxl.app/modules/nginx.html#oxlorg-opnsense-nginx-upstream-server)               | stable   |
+| **DHCP Relay**            | oxlorg.opnsense.dhcrelay_relay                                 | [Docs](https://ansible-opnsense.oxl.app/modules/dhcrelay_relay.html)                                            | stable   |
+| **DHCP Relay**            | oxlorg.opnsense.dhcrelay_destination                           | [Docs](https://ansible-opnsense.oxl.app/modules/dhcrelay_destination.html)                                      | stable   |
+| **DHCP**                  | oxlorg.opnsense.dhcp_general                                   | [Docs](https://ansible-opnsense.oxl.app/modules/dhcp.html)                                                      | stable   |
+| **DHCP Subnet**           | oxlorg.opnsense.dhcp_subnet                                    | [Docs](https://ansible-opnsense.oxl.app/modules/dhcp.html)                                                      | stable   |
+| **DHCP Reservation**      | oxlorg.opnsense.dhcp_reservation                               | [Docs](https://ansible-opnsense.oxl.app/modules/dhcp.html)                                                      | stable   |
+| **DHCP Controlagent**     | oxlorg.opnsense.dhcp_controlagent                              | [Docs](https://ansible-opnsense.oxl.app/modules/dhcp.html)                                                      | stable   |
+| **ACME (Certificates)**   | oxlorg.opnsense.acme_account                                   | [Docs](https://ansible-opnsense.oxl.app/modules/acmeclient.html)                                                | stable   |
+| **ACME (Certificates)**   | oxlorg.opnsense.acme_action                                    | [Docs](https://ansible-opnsense.oxl.app/modules/acmeclient.html)                                                | stable   |
+| **ACME (Certificates)**   | oxlorg.opnsense.acme_general                                   | [Docs](https://ansible-opnsense.oxl.app/modules/acmeclient.html)                                                | stable   |
+| **ACME (Certificates)**   | oxlorg.opnsense.acme_validation                                | [Docs](https://ansible-opnsense.oxl.app/modules/acmeclient.html)                                                | stable   |
+| **ACME (Certificates)**   | oxlorg.opnsense.acme_certificate                               | [Docs](https://ansible-opnsense.oxl.app/modules/acmeclient.html)                                                | stable   |
+| **Postfix**               | oxlorg.opnsense.postfix_general                                | [Docs](https://ansible-opnsense.oxl.app/modules/postfix.html)                                                   | stable   |
+| **Postfix**               | oxlorg.opnsense.postfix_domain                                 | [Docs](https://ansible-opnsense.oxl.app/modules/postfix.html)                                                   | stable   |
+| **Postfix**               | oxlorg.opnsense.postfix_recipient                              | [Docs](https://ansible-opnsense.oxl.app/modules/postfix.html)                                                   | stable   |
+| **Postfix**               | oxlorg.opnsense.postfix_recipientbcc                           | [Docs](https://ansible-opnsense.oxl.app/modules/postfix.html)                                                   | stable   |
+| **Postfix**               | oxlorg.opnsense.postfix_sender                                 | [Docs](https://ansible-opnsense.oxl.app/modules/postfix.html)                                                   | stable   |
+| **Postfix**               | oxlorg.opnsense.postfix_senderbcc                              | [Docs](https://ansible-opnsense.oxl.app/modules/postfix.html)                                                   | stable   |
+| **Postfix**               | oxlorg.opnsense.postfix_sendercanonical                        | [Docs](https://ansible-opnsense.oxl.app/modules/postfix.html)                                                   | stable   |
+| **Postfix**               | oxlorg.opnsense.postfix_headercheck                            | [Docs](https://ansible-opnsense.oxl.app/modules/postfix.html)                                                   | stable   |
+| **Postfix**               | oxlorg.opnsense.postfix_address                                | [Docs](https://ansible-opnsense.oxl.app/modules/postfix.html)                                                   | stable   |
+| **Snapshot**              | oxlorg.opnsense.snapshot                                       | [Docs](https://ansible-opnsense.oxl.app/modules/snapshot.html)                                                  | stable   |
+| **High Availability**     | oxlorg.opnsense.hasync_general                                 | [Docs](https://ansible-opnsense.oxl.app/modules/hasync.html)                                                    | stable   |
+| **High Availability**     | oxlorg.opnsense.hasync_service                                 | [Docs](https://ansible-opnsense.oxl.app/modules/hasync.html)                                                    | stable   |
 | **User Management**       | oxlorg.opnsense.user                                           | [Docs](https://ansible-opnsense.oxl.app/modules/access.html)                                                    | unstable |
 | **User Management**       | oxlorg.opnsense.group                                          | [Docs](https://ansible-opnsense.oxl.app/modules/access.html)                                                    | unstable |
 | **User Management**       | oxlorg.opnsense.privilege                                      | [Docs](https://ansible-opnsense.oxl.app/modules/access.html)                                                    | unstable |

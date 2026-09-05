@@ -27,7 +27,9 @@ class Alias(BaseModule):
     API_KEY_PATH = 'alias.aliases.alias'
     API_MOD = 'firewall'
     API_CONT = 'alias'
-    FIELDS_CHANGE = ['content', 'description', 'categories']
+    # 'statistics' from upstream, 'categories' is our addition — keep ours
+    # last so future merges conflict less often.
+    FIELDS_CHANGE = ['content', 'description', 'statistics', 'categories']
     FIELDS_ALL = ['name', 'type', 'enabled']
     FIELDS_ALL.extend(FIELDS_CHANGE)
     FIELDS_ALL.extend([
@@ -36,13 +38,14 @@ class Alias(BaseModule):
     ])
     FIELDS_DIFF_NO_LOG = ['url_password']
     FIELDS_TRANSLATE = {
+        'statistics': 'counters',
         'updatefreq_days': 'updatefreq',
         'url_auth_type': 'authtype',
         'url_username': 'username',
         'url_password': 'password',
     }
     FIELDS_TYPING = {
-        'bool': ['enabled'],
+        'bool': ['enabled', 'statistics'],
         'select': ['type', 'interface'],
         # `categories` arrives from firewall.alias.get as a dict-of-dicts with
         # per-entry {'selected': 0|1}; type 'list' funnels it through
