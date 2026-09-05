@@ -156,19 +156,23 @@ class Alias(BaseModule):
             )
         )
 
-    def _build_request(self) -> dict:
-        # JOIN_CHAR for the alias module is '\n' (used to glue together
-        # content entries on the wire). OPNsense expects categories as a
-        # comma-separated list of UUIDs in the same payload — so we
-        # materialise that string here, then let the generic build_request
-        # pass it through unchanged (string, not list → no further join).
-        saved = self.p.get('categories')
-        if isinstance(saved, list):
-            self.p['categories'] = ','.join(saved) if saved else ''
-        try:
-            return self.b.build_request()
-        finally:
-            # Restore the list so subsequent diff/log code does not see the
-            # string (it would render badly in --diff output).
-            if isinstance(saved, list):
-                self.p['categories'] = saved
+    def build_request(self) -> dict:
+        # This module's JOIN_CHAR is '\n', which is what `content` needs on
+        # the wire. `categories` however is a ModelRelationField: OPNsense
+        # splits it on ',', so a newline-joined value arrives as one unknown
+        # token and the API rejects the whole request with
+        # "Related category not found" — a correct, if confusing, message,
+        # since it points at the field it could not resolve.
+        #
+        # So build generically and re-join that single field with
+        # RESP_JOIN_CHAR (','). Note the method name: the dispatcher in
+        # base/logic.py looks for `build_request` without the leading
+        # underscore — naming it `_build_request` silently disables it.
+        raw_request = self._base_build_request()
+
+        categories = self.p.get('categories')
+        if isinstance(categories, list):
+            api_key = self.API_KEY_PATH.rsplit('.', 1)[1]
+            raw_request[api_key]['categories'] = self.RESP_JOIN_CHAR.join(categories)
+
+        return raw_request
