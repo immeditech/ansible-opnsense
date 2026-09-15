@@ -298,7 +298,11 @@ class SimplifyTranslate:
         # passthrough for fields that do not have to be translated and should not be "ignored"
         translate_fields = self._fields_translate.values()
         for field in existing:
-            if field not in translate_fields and field not in self._fields_ignore:
+            if field not in translate_fields and field not in self._fields_ignore \
+                    and field not in translated:
+                # never overwrite an already translated field: newer OPNsense versions may return
+                # an unrelated API field with the same name (e.g. wireguard server 'allowed_ips' in 26.7,
+                # which shadowed the translated 'tunneladdress')
                 translated[field] = existing[field]
 
         return translated
