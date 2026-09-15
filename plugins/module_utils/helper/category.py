@@ -30,8 +30,8 @@ def resolve_categories(module: AnsibleModule, params: dict) -> None:
             'command': 'get',
         })
 
-        # OPNsense serialisiert eine leere Kategorie-Liste als [] statt {}
-        # (frische Firewall ohne jede Kategorie).
+        # OPNsense serializes an empty category list as [] instead of {}
+        # (fresh firewall without any category).
         existing = categories['category']['categories']['category'] or {}
         cache_holder.existing_categories = {
             category['name']: uuid
